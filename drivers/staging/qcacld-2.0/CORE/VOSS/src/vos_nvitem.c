@@ -1530,11 +1530,6 @@ VOS_STATUS vos_nv_getRegDomainFromCountryCode( v_REGDOMAIN_t *pRegDomain,
 
     wiphy = pHddCtx->wiphy;
 
-    if (false == wiphy->registered) {
-        VOS_TRACE( VOS_MODULE_ID_VOSS, VOS_TRACE_LEVEL_ERROR,
-                   ("wiphy is not yet registered with the kernel") );
-        return VOS_STATUS_E_FAULT;
-    }
 
     temp_reg_domain = REGDOMAIN_COUNT;
     /* lookup the country in the local database */
