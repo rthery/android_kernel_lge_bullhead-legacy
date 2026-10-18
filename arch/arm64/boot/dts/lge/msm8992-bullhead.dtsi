@@ -626,3 +626,8 @@
 #include "msm8992-bullhead-sound.dtsi"
 #include "msm8992-bullhead-touch.dtsi"
 #include "msm8992-bullhead-sensorhub.dtsi"
+
+/* Leave room for the fingerprint trustlet staging buffer beside QSEE clients. */
+&qsecom_mem {
+	reg = <0 0 0 0x800000>;
+};
