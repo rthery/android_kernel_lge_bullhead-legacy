@@ -1438,6 +1438,7 @@ static struct notifier_block ip_netdev_notifier = {
 static size_t inet_nlmsg_size(void)
 {
 	return NLMSG_ALIGN(sizeof(struct ifaddrmsg))
+	       + nla_total_size(4) /* IFA_FLAGS */
 	       + nla_total_size(4) /* IFA_ADDRESS */
 	       + nla_total_size(4) /* IFA_LOCAL */
 	       + nla_total_size(4) /* IFA_BROADCAST */
@@ -1502,7 +1503,8 @@ static int inet_fill_ifaddr(struct sk_buff *skb, struct in_ifaddr *ifa,
 		preferred = INFINITY_LIFE_TIME;
 		valid = INFINITY_LIFE_TIME;
 	}
-	if ((ifa->ifa_address &&
+	if (nla_put_u32(skb, IFA_FLAGS, ifa->ifa_flags) ||
+	    (ifa->ifa_address &&
 	     nla_put_be32(skb, IFA_ADDRESS, ifa->ifa_address)) ||
 	    (ifa->ifa_local &&
 	     nla_put_be32(skb, IFA_LOCAL, ifa->ifa_local)) ||
